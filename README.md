@@ -1,59 +1,295 @@
-# News Extractor and Summarizer
-News Extractor and Summarizer is a Python-based web application that extracts and summarizes news articles. The application uses several Python libraries including NewsAPI, newspaper3k, spacy, requests, [Pegasus](https://huggingface.co/google/pegasus-xsum) from Hugging Face, and a T5 model from Hugging Face's model hub [mrm8488](https://huggingface.co/mrm8488/t5-base-finetuned-news-titles-classification) to classify news articles into different categories (e.g. business, health, science, entertainment). It also includes a graph-based summary feature that uses similarity to summarize multiple documents from topic clusters of CSV. The app is designed to work with news articles in any language supported by NewsAPI.
+# 🔵 NewsMelt - Advanced News Analysis & Data Visualization Platform
 
-## Installation
-To use this application, you will need to follow the installation steps below:
+![NewsMelt Landing](landing.png)
 
-Clone the repository to your local machine by running 
-```
-git clone https://github.com/Tuhin-SnapD/News-Extractor-Summarizer.git
+A sophisticated news processing pipeline that combines AI-powered content extraction, advanced NLP techniques, and interactive data visualizations to provide comprehensive news analysis across multiple categories.
+
+## 🚀 Features
+
+### 📊 **Multi-Dimensional Data Visualization**
+- Interactive charts and graphs using Plotly
+- Heatmap visualizations for topic analysis
+- Word cloud generation for keyword extraction
+- Real-time analytics dashboard
+
+### 🤖 **AI-Powered Content Analysis**
+- **Pegasus-XSum**: Advanced abstractive summarization
+- **T5-Base Fine-tuned**: News title classification
+- **SpaCy**: Named Entity Recognition (NER)
+- **NLTK**: Text preprocessing and analysis
+- **NetworkX**: Graph-based content analysis
+
+### 📰 **Comprehensive News Processing**
+- Multi-source news aggregation (NewsAPI, RSS feeds)
+- Full content extraction with fallback mechanisms
+- Topic classification across 8 categories
+- Multi-document summarization
+- Sentiment analysis and trend detection
+
+### 🎯 **Smart Content Categorization**
+- **Business**: Market trends, financial insights
+- **Entertainment**: Media, arts, cultural analysis  
+- **Health**: Medical, wellness insights
+- **Science**: Research, technological advances
+- **Technology**: AI, innovation, digital trends
+- **Politics**: Government, policy analysis
+- **Sports**: Athletic events, team analysis
+- **World**: International affairs, global news
+
+## 🛠️ Technology Stack
+
+### **Core Technologies**
+- **Python 3.8+**: Main programming language
+- **Transformers (Hugging Face)**: State-of-the-art NLP models
+- **PyTorch**: Deep learning framework
+- **Pandas & NumPy**: Data manipulation and analysis
+- **Plotly**: Interactive visualizations
+- **NetworkX**: Graph analysis and visualization
+
+### **NLP Models Used**
+1. **google/pegasus-xsum** (2.1GB)
+   - Abstractive text summarization
+   - Optimized for news content
+   - Generates concise, informative summaries
+
+2. **mrm8488/t5-base-finetuned-news-title-classification** (850MB)
+   - Fine-tuned T5 model for news categorization
+   - 8-category classification system
+   - High accuracy on news title classification
+
+3. **en_core_web_sm** (SpaCy)
+   - Named Entity Recognition
+   - Part-of-speech tagging
+   - Dependency parsing
+
+### **Web Technologies**
+- **HTML5/CSS3**: Modern, responsive interface
+- **JavaScript (ES6+)**: Interactive functionality
+- **Font Awesome**: Icon library
+- **Google Fonts**: Typography
+
+## 📦 Installation & Setup
+
+### **Prerequisites**
+- Python 3.8 or higher
+- Git
+- 4GB+ RAM (for model loading)
+- 5GB+ free disk space
+
+### **1. Clone the Repository**
+```bash
+git clone https://github.com/yourusername/News-Extractor-Summarizer.git
 cd News-Extractor-Summarizer
-pip install -r requirements.txt 
-```
-Or
-```
-conda create --name env_name --file requirements.txt
-```
-## Setup
-**To use this project, there are two cache directories with the following structure in the 'News-Extractor-Summarizer' folder:**
-```
-cache_dir/
-├── transformers/
-│   ├── google/
-│   │   └── xsum/
-│   └── mrm8488/
-│       └── t5-base-finetuned-news-title-classification/
-
 ```
 
-These directories will be used by the Hugging Face Transformers library to cache the pre-trained models and tokenizers.
+### **2. Create Virtual Environment**
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
-To complete the setup, please follow these steps:
-
-      - Go to https://huggingface.co/google/pegasus-xsum and download the file 'pytorch_model.bin'.
-      - Move the downloaded file 'pytorch_model.bin' into the 'xsum' directory.
-      - Next, go to https://huggingface.co/mrm8488/t5-base-finetuned-news-titles-classification and download the file 'pytorch_model.bin'.
-      - Move the downloaded file 'pytorch_model.bin' into the 't5-base-finetuned-news-title-classification' directory.
-
-**Rename the file env.template to .env as well as app/config.template.js to app/config.js and replace the placeholder values with your own [NewsAPI Key](https://newsapi.org/) and [Google API Key and Search Engine ID](https://console.developers.google.com/)**
-
-
-## Usage
-Now run the following command
-
-```
-python -u main.py 
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-This will run a series of different python scripts available in the directory in order to create various datatsets in a newly made dataset directory.
+### **3. Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-After datasets have been created run the app/index.html, to view the results in the browser and to google search the final outputs and read more about it.
+### **4. Set Up Environment Variables**
+Create a `.env` file in the root directory:
+```env
+# Required API Keys
+NEWS_API=your_news_api_key_here
+```
 
-## Algorithm
-![Algo](https://github.com/Tuhin-SnapD/Tuhin-SnapD/blob/main/Algo.png.jpg)
+### **5. Download NLP Models**
 
-## Contributing
-Contributions to this repository are welcome! If you have an idea for a new summarization model or an improvement to an existing one, feel free to create a pull request.
+#### **Option A: Automatic Download (Recommended)**
+The models will be automatically downloaded on first run:
+```bash
+python main.py
+```
 
-## Acknowledgements
-This repository was created by Tuhin and Anant as part of Academic Capstone Project. We would like to thank Prof. Durgesh Kumar and Multiple learned faculties of Vellore Institute of technology.
+#### **Option B: Manual Download**
+```bash
+# Create cache directory
+mkdir -p cache_dir/transformers
+
+# Download Pegasus-XSum model
+python -c "from transformers import PegasusForConditionalGeneration, AutoTokenizer; PegasusForConditionalGeneration.from_pretrained('google/pegasus-xsum', cache_dir='cache_dir/transformers'); AutoTokenizer.from_pretrained('google/pegasus-xsum', cache_dir='cache_dir/transformers')"
+
+# Download T5-Base Fine-tuned model
+python -c "from transformers import T5ForConditionalGeneration, AutoTokenizer; T5ForConditionalGeneration.from_pretrained('mrm8488/t5-base-finetuned-news-title-classification', cache_dir='cache_dir/transformers'); AutoTokenizer.from_pretrained('mrm8488/t5-base-finetuned-news-title-classification', cache_dir='cache_dir/transformers')"
+
+# Download SpaCy model
+python -m spacy download en_core_web_sm
+```
+
+### **6. Run the Application**
+
+#### **Backend Processing**
+```bash
+# Run the complete pipeline
+python main.py
+
+# Or run individual components
+python run.py
+```
+
+#### **Frontend Interface**
+Open `app/index.html` in your web browser or serve it using a local server:
+```bash
+# Using Python
+python -m http.server 8000
+
+# Using Node.js (if installed)
+npx serve app
+```
+
+## 🔧 Configuration
+
+### **Model Configuration**
+Models are configured in `src/utils/config.py`:
+
+```python
+# Summarization Model
+SUMMARIZATION_CONFIG = {
+    'model_name': 'google/pegasus-xsum',
+    'max_length': 150,
+    'num_beams': 4,
+    'temperature': 1.0
+}
+
+# Topic Classification Model
+TOPIC_MODELING_CONFIG = {
+    'model_path': 'cache_dir/transformers/mrm8488/t5-base-finetuned-news-title-classification',
+    'batch_size': 10
+}
+```
+
+### **API Configuration**
+```python
+# News API Settings
+NEWS_API_CONFIG = {
+    'query': 'business economy finance market...',
+    'language': 'en',
+    'sort_by': 'popularity',
+    'page_size': 100
+}
+```
+
+## 📁 Project Structure
+
+```
+News-Extractor-Summarizer/
+├── app/                    # Frontend web interface
+│   ├── index.html         # Main dashboard
+│   ├── script.js          # Interactive functionality
+│   └── style.css          # Styling
+├── src/                   # Backend source code
+│   ├── core/             # Core processing modules
+│   │   ├── content_extractor.py
+│   │   ├── graph_summarizer.py
+│   │   ├── news_crawler.py
+│   │   ├── summarizer.py
+│   │   └── topic_classifier.py
+│   ├── pipeline.py       # Main orchestration
+│   └── utils/            # Utilities and config
+├── cache_dir/            # Model cache (gitignored)
+├── dataset/              # Processed data (gitignored)
+├── output/               # Generated outputs (gitignored)
+├── main.py              # Entry point
+├── run.py               # Alternative runner
+└── requirements.txt     # Dependencies
+```
+
+## 🎯 Usage Examples
+
+### **Basic News Analysis**
+```python
+from src.pipeline import PipelineOrchestrator
+
+# Initialize and run pipeline
+orchestrator = PipelineOrchestrator()
+success = orchestrator.run_pipeline()
+```
+
+### **Custom Topic Analysis**
+```python
+from src.core.topic_classifier import TopicClassifier
+
+classifier = TopicClassifier()
+topic = classifier.classify_text("Your news article text here")
+print(f"Classified as: {topic}")
+```
+
+### **Multi-Document Summarization**
+```python
+from src.core.summarizer import MultiSummarizer
+
+summarizer = MultiSummarizer()
+summary = summarizer.summarize_text("Your long article text here")
+print(f"Summary: {summary}")
+```
+
+## 🔍 API Keys Setup
+
+### **NewsAPI**
+1. Visit [NewsAPI.org](https://newsapi.org/)
+2. Sign up for a free account
+3. Get your API key from the dashboard
+4. Add to `.env`: `NEWS_API=your_key_here`
+
+
+## 🚨 Troubleshooting
+
+### **Model Download Issues**
+```bash
+# Clear cache and retry
+rm -rf cache_dir/transformers/*
+python main.py
+```
+
+### **Memory Issues**
+- Reduce batch sizes in config
+- Use smaller models for testing
+- Ensure sufficient RAM (4GB+ recommended)
+
+### **API Rate Limits**
+- Implement retry mechanisms
+- Use multiple API keys
+- Respect rate limits in configuration
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Hugging Face** for the transformer models
+- **NewsAPI** for news data
+- **SpaCy** for NLP tools
+- **Plotly** for visualizations
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/yourusername/News-Extractor-Summarizer/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/News-Extractor-Summarizer/discussions)
+- **Email**: your.email@example.com
+
+---
+
+**Made with ❤️ by Tuhin-SnapD**
+
+*Transform your news consumption with AI-powered insights and beautiful visualizations.*

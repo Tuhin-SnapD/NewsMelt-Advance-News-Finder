@@ -1,27 +1,39 @@
+#!/usr/bin/env python3
 """
-This code is a Python script that executes several other Python scripts in sequence using the 
-subprocess module. The code defines a list of file names (files_to_run) corresponding to other Python 
-scripts that need to be executed. Then, it iterates over each file name in the list and uses 
-subprocess.run() to execute them as separate Python processes with the python command.
-
-The scripts that are being executed in sequence are:
-
-The code executes each of these scripts one by one in the order specified in the files_to_run list 
-using the subprocess.run() function, which creates separate processes for each script and runs them 
-sequentially.
+News Extractor Summarizer - Main Entry Point
+A comprehensive news processing pipeline with progress bars and improved structure
 """
 
-import subprocess
+import sys
+from pathlib import Path
 
-files_to_run = [
-    'news_crawl.py',
-    'full_content.py',
-    'topic_modelling.py',
-    'topic_cluster_formation.py',
-    'multi_summ.py',
-    'graph_summ.py',
-    'final.py'
-]
+# Add src to path
+sys.path.insert(0, str(Path(__file__).parent / 'src'))
 
-for file in files_to_run:
-    subprocess.run(['python', file])
+from src.pipeline import PipelineOrchestrator
+
+def main():
+    """Main entry point for the News Extractor Summarizer"""
+    try:
+        # Initialize and run the pipeline
+        orchestrator = PipelineOrchestrator()
+        success = orchestrator.run_pipeline()
+        
+        if success:
+            print("\n🎉 Pipeline completed successfully!")
+            print("Check the 'dataset' directory for results.")
+        else:
+            print("\n❌ Pipeline completed with errors.")
+            print("Check the output above for details.")
+        
+        sys.exit(0 if success else 1)
+        
+    except KeyboardInterrupt:
+        print("\n⚠️  Pipeline interrupted by user")
+        sys.exit(1)
+    except Exception as e:
+        print(f"\n💥 Unexpected error: {str(e)}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

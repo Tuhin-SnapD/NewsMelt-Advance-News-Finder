@@ -5,40 +5,219 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>News Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>NewsMelt - Advanced News Analysis & Visualization</title>
   </head>
   <body>
-    <h1>Important News Viewer, Your one stop destination for Important news.</h1>
-    <button id="btn1">Business</button>
-    <button id="btn2">Entertainment</button>
-    <button id="btn3">Health</button>
-    <button id="btn4">Science</button>
-    <div id="content"></div>
-    <div id="image-container">
-      <img id="image" src="" alt="Image" />
-    </div>
-    <button id="searchBtn">Search on Google</button>
-    <div id="searchResultsContainer">
-      <!-- Container for search results -->
-      <h2>Search Results</h2>
-      <!-- Heading for search results -->
-      <div id="searchResults">
-        <div id="image-container">
-          <img id="image" src="" alt="Image" />
+    <!-- Header Section -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <h1>NewsMelt</h1>
+          </div>
+          <p class="tagline">Advanced News Analysis & Data Visualization Platform</p>
         </div>
       </div>
-      <!-- Search results will be displayed here -->
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Category Selection -->
+        <section class="category-section">
+          <h2 class="section-title">Choose a News Category</h2>
+          <div class="category-grid">
+            <button class="category-btn" id="btn1" data-category="business">
+              <i class="fas fa-briefcase"></i>
+              <span>Business</span>
+              <small>Market trends & financial insights</small>
+            </button>
+            <button class="category-btn" id="btn2" data-category="entertainment">
+              <i class="fas fa-film"></i>
+              <span>Entertainment</span>
+              <small>Media, arts & cultural analysis</small>
+            </button>
+            <button class="category-btn" id="btn3" data-category="health">
+              <i class="fas fa-heartbeat"></i>
+              <span>Health</span>
+              <small>Medical & wellness insights</small>
+            </button>
+            <button class="category-btn" id="btn4" data-category="science">
+              <i class="fas fa-flask"></i>
+              <span>Science</span>
+              <small>Research & technological advances</small>
+            </button>
+          </div>
+        </section>
+
+        <!-- Content Display -->
+        <section class="content-section">
+          <div class="content-card">
+            <div class="content-header">
+              <h3 class="content-title">News Analysis Dashboard</h3>
+              <div class="header-actions">
+                <button class="export-btn" id="exportBtn">
+                  <i class="fas fa-download"></i>
+                  <span>Export Report</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="content-body">
+              <!-- Text Content -->
+              <div class="text-content">
+                <div class="text-header">
+                  <h4>News Summary</h4>
+                  <div class="text-meta">
+                    <span class="category-badge" id="categoryBadge">Select Category</span>
+                    <span class="timestamp" id="timestamp">-</span>
+                  </div>
+                </div>
+                <div id="content" class="news-text">
+                  <div class="placeholder">
+                    <i class="fas fa-chart-bar"></i>
+                    <p>Select a category above to view comprehensive news analysis with data visualizations</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Visualization Content -->
+              <div class="visualization-content">
+                <div class="viz-header">
+                  <h4>Data Visualizations</h4>
+                  <div class="viz-controls">
+                    <button class="viz-tab active" data-viz="main">
+                      <i class="fas fa-chart-line"></i>
+                      <span>Main Graph</span>
+                    </button>
+                    <button class="viz-tab" data-viz="heatmap">
+                      <i class="fas fa-th"></i>
+                      <span>Heatmap</span>
+                    </button>
+                    <button class="viz-tab" data-viz="wordcloud">
+                      <i class="fas fa-cloud"></i>
+                      <span>Word Cloud</span>
+                    </button>
+                  </div>
+                </div>
+                <div id="image-container" class="image-wrapper">
+                  <div class="image-placeholder">
+                    <i class="fas fa-chart-pie"></i>
+                    <p>Select a category to view visualizations</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section class="analytics-section" id="analyticsSection">
+          <h2 class="section-title">Analytics Overview</h2>
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <div class="analytics-icon">
+                <i class="fas fa-newspaper"></i>
+              </div>
+              <div class="analytics-content">
+                <h3>Articles Analyzed</h3>
+                <p class="analytics-number" id="articlesCount">0</p>
+              </div>
+            </div>
+            <div class="analytics-card">
+              <div class="analytics-icon">
+                <i class="fas fa-keyboard"></i>
+              </div>
+              <div class="analytics-content">
+                <h3>Key Topics</h3>
+                <p class="analytics-number" id="topicsCount">0</p>
+              </div>
+            </div>
+            <div class="analytics-card">
+              <div class="analytics-icon">
+                <i class="fas fa-trending-up"></i>
+              </div>
+              <div class="analytics-content">
+                <h3>Trending Score</h3>
+                <p class="analytics-number" id="trendingScore">0%</p>
+              </div>
+            </div>
+            <div class="analytics-card">
+              <div class="analytics-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="analytics-content">
+                <h3>Last Updated</h3>
+                <p class="analytics-number" id="lastUpdated">-</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <p class="copyright">
+              © 2024 🔵 NewsMelt - Advanced News Analysis Platform
+            </p>
+            <p class="footer-description">
+              Powered by AI-driven content analysis and data visualization
+            </p>
+          </div>
+          <div class="footer-links">
+            <a href="https://github.com/Tuhin-SnapD" target="_blank" rel="noopener noreferrer" class="footer-link">
+              <i class="fab fa-github"></i>
+              <span>GitHub</span>
+            </a>
+            <a href="#" class="footer-link" id="aboutLink">
+              <i class="fas fa-info-circle"></i>
+              <span>About</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Analyzing news data...</p>
+      </div>
     </div>
-    <script src="config.js"></script>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>About NewsMelt</h3>
+          <button class="modal-close" id="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>NewsMelt is an advanced news analysis platform that combines AI-powered content extraction with sophisticated data visualization techniques.</p>
+          <div class="feature-list">
+            <h4>Key Features:</h4>
+            <ul>
+              <li><i class="fas fa-chart-line"></i> Multi-dimensional data visualizations</li>
+              <li><i class="fas fa-brain"></i> AI-powered content analysis</li>
+              <li><i class="fas fa-download"></i> Export capabilities</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
-  <footer>
-    <div class="container">
-      <p>
-        © 2023 Your Website Name. All rights reserved. | 
-        <a href="https://github.com/Tuhin-SnapD" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </p>
-    </div>
-  </footer>
-  
 </html>
