@@ -282,12 +282,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **SpaCy** for NLP tools
 - **Plotly** for visualizations
 
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/News-Extractor-Summarizer/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/News-Extractor-Summarizer/discussions)
-- **Email**: your.email@example.com
-
 ---
 
 **Made with ❤️ by Tuhin-SnapD**
